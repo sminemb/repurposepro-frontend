@@ -1,57 +1,101 @@
-:root {
-  --background: #0b0d10;
-  --foreground: #f4f4f5;
-  --muted: #a1a1aa;
+@import "tailwindcss" source("../");
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-html {
-  min-height: 100%;
-}
+@layer base {
+  :root {
+    --background: hsl(240 20% 98%);
+    --foreground: hsl(240 10% 8%);
+    --card: hsl(0 0% 100%);
+    --card-foreground: hsl(240 10% 8%);
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(240 10% 8%);
+    --primary: hsl(258 90% 60%);
+    --primary-foreground: hsl(0 0% 100%);
+    --secondary: hsl(240 5% 94%);
+    --secondary-foreground: hsl(240 8% 16%);
+    --muted: hsl(240 5% 94%);
+    --muted-foreground: hsl(240 4% 42%);
+    --accent: hsl(258 45% 94%);
+    --accent-foreground: hsl(258 70% 38%);
+    --destructive: hsl(0 72% 51%);
+    --destructive-foreground: hsl(0 0% 100%);
+    --success: hsl(142 72% 35%);
+    --success-foreground: hsl(0 0% 100%);
+    --warning: hsl(38 92% 45%);
+    --warning-foreground: hsl(30 20% 10%);
+    --border: hsl(240 6% 88%);
+    --input: hsl(240 6% 88%);
+    --ring: hsl(258 90% 60%);
+    --radius: 0.75rem;
+  }
 
-html,
-body {
-  max-width: 100vw;
-}
+  .dark {
+    --background: hsl(228 18% 7%);
+    --foreground: hsl(220 14% 96%);
+    --card: hsl(228 16% 10%);
+    --card-foreground: hsl(220 14% 96%);
+    --popover: hsl(228 16% 10%);
+    --popover-foreground: hsl(220 14% 96%);
+    --primary: hsl(258 90% 66%);
+    --primary-foreground: hsl(240 20% 8%);
+    --secondary: hsl(228 13% 15%);
+    --secondary-foreground: hsl(220 14% 94%);
+    --muted: hsl(228 13% 15%);
+    --muted-foreground: hsl(220 9% 64%);
+    --accent: hsl(258 30% 18%);
+    --accent-foreground: hsl(258 85% 82%);
+    --destructive: hsl(0 63% 45%);
+    --destructive-foreground: hsl(0 0% 98%);
+    --success: hsl(142 62% 39%);
+    --success-foreground: hsl(144 70% 96%);
+    --warning: hsl(38 88% 52%);
+    --warning-foreground: hsl(30 20% 10%);
+    --border: hsl(228 12% 19%);
+    --input: hsl(228 12% 19%);
+    --ring: hsl(258 90% 66%);
+  }
 
-body {
-  min-height: 100vh;
-  margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  * {
+    @apply border-border;
+  }
 
-* {
-  box-sizing: border-box;
-}
+  html {
+    @apply min-h-full;
+  }
 
-.foundation {
-  display: grid;
-  min-height: 100vh;
-  place-items: center;
-  padding: 2rem;
-}
-
-.foundation section {
-  max-width: 42rem;
-  text-align: center;
-}
-
-.foundation h1 {
-  margin: 0;
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
-  letter-spacing: -0.06em;
-}
-
-.description {
-  margin: 1.25rem auto 0;
-  color: var(--muted);
-  font-size: 1.125rem;
-  line-height: 1.7;
-}
-
-.status {
-  margin: 2rem 0 0;
-  font-size: 0.875rem;
+  body {
+    @apply min-h-screen bg-background text-foreground antialiased;
+  }
 }
