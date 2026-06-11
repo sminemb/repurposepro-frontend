@@ -1,6 +1,6 @@
 # RepurposePro Frontend
 
-RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 2 frontend design-system foundation.
+RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 3 frontend theme-system foundation.
 
 ## Current Tech Stack
 
@@ -11,8 +11,11 @@ RepurposePro is a creator workspace for turning long-form videos into summaries 
 - Geist through `next/font/google`
 - Tailwind CSS 4
 - shadcn/ui foundation
+- next-themes
 
-Phase 2 adds dark-first semantic design tokens and the essential `Button`, `Card`, `Input`, `Label`, and `Badge` UI components.
+Phase 2 added dark-first semantic design tokens and the essential `Button`, `Card`, `Input`, `Label`, and `Badge` UI components.
+
+Phase 3 adds `next-themes` with dark mode as the default and supports light, dark, and system theme modes.
 
 ## Environment
 

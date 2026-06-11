@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/common/theme-toggle";
 import {
   Card,
   CardContent,
@@ -13,7 +14,7 @@ export default function Home() {
       <Card className="w-full max-w-xl">
         <CardHeader>
           <Badge variant="secondary" className="mb-3 w-fit">
-            Phase 2
+            Phase 3
           </Badge>
           <CardTitle className="text-3xl tracking-tight">
             RepurposePro
@@ -23,10 +24,11 @@ export default function Home() {
             from one workspace.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-5">
           <p className="text-sm font-medium text-primary">
-            Design system foundation is ready.
+            Theme system is ready.
           </p>
+          <ThemeToggle />
         </CardContent>
       </Card>
     </main>
