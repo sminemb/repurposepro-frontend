@@ -29,7 +29,7 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-5">
           <p className="text-sm font-medium text-primary">
-            API client foundation is ready.
+            TanStack Query foundation is ready.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Button asChild>
