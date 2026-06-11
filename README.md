@@ -4,13 +4,12 @@ RepurposePro is a creator workspace for turning long-form videos into summaries 
 
 ## Current Tech Stack
 
-- Next.js
+- Next.js (App Router)
 - TypeScript
-- App Router
 - ESLint
-- Geist through `next/font/google`
+- Google Font through `next/font/google`
 - Tailwind CSS 4
-- shadcn/ui foundation
+- shadcn/ui
 - next-themes
 
 Phase 2 added dark-first semantic design tokens and the essential `Button`, `Card`, `Input`, `Label`, and `Badge` UI components.
