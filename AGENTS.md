@@ -1,72 +1,99 @@
 # Project Name
 
-RepurposePro Frontend
+RepurposePro
 
 ## Project Description
 
-RepurposePro is an AI-powered video repurposing platform that helps creators transform long-form videos into:
+RepurposePro is an AI-powered video repurposing platform that transforms long-form videos into:
 
-- A 7–10 minute summary video
-- Multiple vertical highlight reels for TikTok, Instagram Reels, and YouTube Shorts
+- A 7–10 minute short-form summary video
+- Multiple vertical highlight reels optimized for TikTok, Instagram Reels, and YouTube Shorts
 
-The frontend is the user-facing creator workspace for:
+The frontend is a creator workspace for:
 
 - Signing up and logging in
 - Managing projects
 - Uploading long-form videos
-- Starting video processing
-- Tracking processing jobs
-- Previewing generated outputs
-- Downloading generated videos
+- Starting video processing jobs
+- Tracking processing progress
+- Viewing generated summary videos and reels
 - Viewing notifications
-- Managing account and theme settings
+- Managing basic settings
 
-The frontend should be built phase by phase.
+The frontend must be built phase by phase.
 
-Do not build the whole frontend at once.
+Do not build multiple phases at once.
 
 Do not jump ahead to later phases unless explicitly requested.
 
-## Backend API Relationship
+## Product Name Rule
 
-The frontend should communicate only with the Express.js API Gateway.
-
-Default local backend URL:
+The product name is:
 
 ```txt
-http://localhost:5000
+RepurposePro
 ```
 
-Use this environment variable:
+Do not rename it.
+
+Do not use placeholder names like:
 
 ```txt
-NEXT_PUBLIC_API_URL=http://localhost:5000
+VideoAI
+ClipAI
+Reelify
+CreatorAI
+AI Video Platform
 ```
 
-The frontend must never directly call the FastAPI AI Service.
+Use `RepurposePro` everywhere.
 
-Do not call:
+## Relationship to DESIGN.md
+
+This file controls how the frontend should be built.
+
+Use `AGENTS.md` for:
+
+- Architecture rules
+- Phase-by-phase build order
+- Security rules
+- API integration rules
+- Authentication rules
+- Folder structure
+- Coding rules
+- Anti-slop rules
+- Command expectations
+
+Use `DESIGN.md` for:
+
+- Visual design direction
+- Theme and color guidance
+- Typography
+- Layout style
+- Component appearance
+- Spacing, radius, borders, and shadows
+- Page-level UX patterns
+- Empty, loading, and error-state presentation
+
+Do not duplicate detailed visual design rules in this file.
+
+When implementing UI, read both files:
 
 ```txt
-http://localhost:8000
+AGENTS.md → tells you what to build and what not to build.
+DESIGN.md → tells you how it should look and feel.
 ```
 
-The FastAPI AI Service is internal backend infrastructure.
-
-The expected backend stack is:
+If the two files conflict, follow this priority:
 
 ```txt
-Express.js API Gateway
-Better Auth
-Prisma
-Neon Serverless Postgres
-Arcjet
-FastAPI AI Service behind Express
+Security and phase scope in AGENTS.md take priority.
+Visual and UX styling in DESIGN.md take priority.
 ```
 
-## Main User Workflow
+## Main Frontend Goal
 
-The final frontend should support this workflow:
+The frontend should help creators complete this workflow:
 
 ```txt
 Sign up / Login
@@ -74,211 +101,117 @@ Sign up / Login
 → Create project
 → Upload long-form video
 → Start processing
-→ Track processing job status
+→ Track processing job
 → View generated summary and reels
-→ Preview outputs
-→ Download outputs
 → View notifications
 → Manage settings
 ```
 
-Build this workflow gradually.
+Every UI element should support that workflow.
 
-Do not implement all of it in Phase 1.
+Do not add unrelated UI.
+
+Do not add fake product areas just to make the app look bigger.
+
+## Backend Relationship
+
+The frontend must call only the Express API Gateway.
+
+Allowed:
+
+```txt
+Frontend → Express API Gateway
+```
+
+Disallowed:
+
+```txt
+Frontend → FastAPI AI Service
+Frontend → Neon Database
+Frontend → S3/R2 storage directly without signed URLs
+Frontend → internal worker services
+```
+
+The Express API Gateway runs locally at:
+
+```txt
+http://localhost:5000
+```
+
+The FastAPI AI Service may run locally at:
+
+```txt
+http://localhost:8000
+```
+
+The frontend must never call:
+
+```txt
+http://localhost:8000
+```
+
+The frontend API base URL must come from:
+
+```txt
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+Do not hard-code backend URLs inside components.
+
+## Environment Variables
+
+Frontend `.env.example` should include:
+
+```txt
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+Only expose browser-safe values with the `NEXT_PUBLIC_` prefix.
+
+Never put secrets in frontend environment variables.
+
+Do not expose:
+
+```txt
+DATABASE_URL
+DIRECT_URL
+BETTER_AUTH_SECRET
+ARCJET_KEY
+AI service secrets
+Storage secret keys
+Stripe secret keys
+Email provider keys
+API tokens
+Private webhook secrets
+```
+
+If a value is sensitive, it belongs in the backend only.
+
+Do not create or commit real `.env` files.
 
 ## Recommended Frontend Stack
 
 Use:
 
-```txt
-Next.js
-TypeScript
-App Router
-Tailwind CSS
-shadcn/ui
-Lucide React
-TanStack Query
-React Hook Form
-Zod
-next-themes
-Better Auth client
-Axios or native fetch
-Google Fonts through next/font/google
-```
+- Next.js
+- TypeScript
+- App Router
+- Tailwind CSS
+- shadcn/ui
+- Lucide React
+- TanStack Query
+- React Hook Form
+- Zod
+- next-themes
+- Better Auth client
+- Central API client using native fetch or Axios
+- Google Fonts through `next/font/google`
 
-Do not use Refine Core for the main creator-facing frontend.
+Do not use Refine Core for the main creator frontend.
 
-Refine may be considered later only for an admin dashboard if explicitly requested.
+Refine may be considered later only for admin tooling if explicitly requested.
 
-## Design Direction
-
-RepurposePro should feel like a premium AI video workspace for creators.
-
-The product should feel like:
-
-```txt
-Linear-level interface clarity
-+ CapCut-style creator utility
-+ modern AI workflow polish
-```
-
-The UI should feel:
-
-- Clean
-- Fast
-- Focused
-- Creator-friendly
-- Video-first
-- Professional
-- Dark-first
-- Useful, not decorative
-
-Avoid making the app look like a generic AI SaaS template.
-
-## Anti-AI-Slop Rules
-
-Do not generate:
-
-```txt
-Fake metrics
-Fake testimonials
-Fake charts
-Random decorative gradients
-Overused sparkle icons
-Generic SaaS cards
-Unrelated dashboard widgets
-Placeholder lorem ipsum
-Inconsistent spacing
-Inconsistent border radius
-Inconsistent button styles
-Overly dramatic marketing copy
-```
-
-Every visible UI element must support the user workflow.
-
-Before adding a component, ask:
-
-```txt
-Does this help the user upload, process, preview, manage, or download videos?
-```
-
-If not, do not add it.
-
-## Visual Style Rules
-
-Use a dark-first design system.
-
-Default theme:
-
-```txt
-dark
-```
-
-Support light and system themes later, but optimize the MVP for dark mode first.
-
-Use:
-
-```txt
-Dark background
-Subtle borders
-Soft cards
-Clear hierarchy
-Minimal gradients
-Controlled accent color
-High-quality spacing
-Video previews as the visual focus
-```
-
-Avoid:
-
-```txt
-Glowing blobs everywhere
-Random gradients
-Floating glass panels without purpose
-Excessive shadows
-AI sparkle icons everywhere
-Oversized emoji
-Generic neon effects
-Meaningless animations
-```
-
-## Theme Rules
-
-Use CSS variables for theme tokens.
-
-Support:
-
-```txt
-Dark
-Light
-System
-```
-
-Use `next-themes` when the theme phase begins.
-
-Do not hard-code colors throughout components.
-
-Use semantic tokens:
-
-```txt
-background
-foreground
-card
-card-foreground
-primary
-primary-foreground
-muted
-muted-foreground
-border
-destructive
-success
-warning
-```
-
-If success/warning tokens do not exist, add them carefully and consistently.
-
-## Color Rules
-
-Use a small, controlled color palette.
-
-Recommended direction:
-
-```txt
-Background: near-black / dark navy
-Surface: dark gray
-Surface elevated: slightly lighter dark gray
-Border: subtle gray border
-Primary accent: violet or cyan
-Success: green
-Warning: amber
-Error: red
-Text primary: near-white
-Text secondary: soft gray
-Text muted: gray
-```
-
-Use one primary accent color consistently.
-
-Good accent usage:
-
-```txt
-Primary button
-Active sidebar item
-Progress indicator
-Selected tab
-Upload focus state
-```
-
-Bad accent usage:
-
-```txt
-Every card has a different gradient
-Every section glows
-Every icon has a random color
-Buttons use inconsistent colors
-```
-
-## Google Fonts
+## Font Rules
 
 Use Google Fonts through Next.js font optimization.
 
@@ -288,203 +221,687 @@ Preferred font:
 Geist
 ```
 
-Acceptable alternatives:
+Acceptable fallback:
 
 ```txt
 Inter
-Manrope
-DM Sans
 ```
 
-Recommended default:
+Do not add external font link tags.
+
+Do not use multiple competing font families.
+
+Do not use decorative fonts.
+
+## General Coding Rules
+
+- Use TypeScript.
+- Use the App Router.
+- Use `src/` directory.
+- Use import alias `@/*`.
+- Prefer Server Components by default.
+- Use Client Components only when needed.
+- Keep components small and focused.
+- Avoid unnecessary abstractions.
+- Avoid duplicate components.
+- Do not disable TypeScript errors to pass builds.
+- Do not disable ESLint rules without a clear reason.
+- Do not add unrelated dependencies.
+- Do not add unused files.
+- Do not add placeholder business logic.
+- Do not add fake data unless a phase explicitly says mock data is allowed.
+
+## App Router Rules
+
+Use the Next.js App Router.
+
+Prefer route groups:
 
 ```txt
-Geist Sans for the main UI
+(auth)
+(dashboard)
 ```
 
-If using Next.js App Router, import fonts from:
+Use Server Components by default.
+
+Use Client Components only when needed for:
 
 ```txt
-next/font/google
+interactivity
+theme switching
+forms
+session hooks
+TanStack Query hooks
+browser APIs
+file uploads
 ```
 
-Do not load Google Fonts with external `<link>` tags unless there is a strong reason.
+Mark client components with:
 
-Do not use decorative or overly stylized fonts.
+```tsx
+"use client";
+```
 
-Typography should feel:
+Do not make every component a client component by default.
 
-- Clean
-- Modern
-- Professional
-- Readable
-- Product-focused
+## TypeScript Rules
 
-Recommended font usage:
+Use TypeScript everywhere.
+
+Avoid `any`.
+
+Use `unknown` when needed and narrow safely.
+
+Keep feature-specific types close to their feature.
+
+Use shared types only when reused across features.
+
+Do not invent frontend-only fields that are not returned by the backend.
+
+## Frontend Security Rules
+
+The RepurposePro frontend must be secure by default.
+
+The frontend should never be treated as the source of truth for security.
+
+The backend must enforce:
+
+- Authentication
+- Authorization
+- Project ownership
+- Upload validation
+- Processing limits
+- Rate limits
+- Payment limits later
+- Admin permissions later
+
+Frontend checks are for user experience only.
+
+Do not rely on frontend-only checks to protect data.
+
+## Frontend Security Boundary
+
+The frontend may call only the Express API Gateway.
+
+Allowed:
 
 ```txt
-Headings: Geist Sans, medium or semibold
-Body text: Geist Sans, regular
-Muted text: Geist Sans, regular
-Buttons: Geist Sans, medium
+Frontend → Express API Gateway
 ```
 
-Avoid:
+Disallowed:
 
 ```txt
-Too many font families
-Decorative display fonts
-Overly playful fonts
-Random font changes between pages
+Frontend → FastAPI AI Service
+Frontend → Neon Database
+Frontend → S3/R2 storage directly without signed URLs
+Frontend → internal worker services
 ```
 
-Use one primary font family consistently across the application.
+The frontend must never call any FastAPI AI Service URL directly.
 
-## Typography Rules
-
-Use Google Fonts through `next/font/google`.
-
-Preferred:
-
-- Geist
-
-Acceptable alternatives:
-
-- Inter
-- Manrope
-- DM Sans
-
-Every page should have:
+The frontend API base URL must come from:
 
 ```txt
-Clear title
-Short description
-Primary action
-Relevant content
+NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
-Avoid:
+Do not hard-code backend URLs inside components.
+
+## Authentication Security Rules
+
+Use Better Auth client integration.
+
+Do not build custom JWT authentication.
+
+Do not store auth tokens in:
 
 ```txt
-Too many font sizes
-Too many font weights
-All-caps everywhere
-Decorative fonts
-Marketing-style giant headings inside dashboard pages
+localStorage
+sessionStorage
+cookies created manually by frontend code
+IndexedDB
 ```
 
-## Layout Rules
+Use Better Auth’s cookie/session flow.
 
-Use a real product layout.
+Rules:
 
-Final dashboard layout should include:
+- Do not manually attach fake user IDs to requests.
+- Do not trust user role values from local state.
+- Do not trust client-side route protection alone.
+- Do not expose session internals in the UI.
+- Do not log session objects in production.
+- Do not display sensitive auth errors directly if they expose internals.
+- Do not add email verification, magic links, social login, passkeys, or organizations unless the phase explicitly asks for them.
+
+The frontend may use session state to improve UX, but backend authorization must still protect all data.
+
+Email validation codes are not required for MVP signup unless explicitly added later.
+
+## Protected Route Rules
+
+Dashboard pages should eventually require an authenticated session.
+
+Protected areas include:
 
 ```txt
-Sidebar navigation
-Top bar/header
-Main content area
-Optional right-side details panel later
+/dashboard
+/projects
+/upload
+/results
+/notifications
+/settings
+/admin
 ```
 
-Avoid:
+Route protection belongs in the assigned frontend phase.
+
+Until that phase, do not fake authentication.
+
+When route protection is added:
+
+- Redirect unauthenticated users to login.
+- Preserve intended destination only if safe.
+- Do not expose private project data before session loading finishes.
+- Show a safe loading state while checking session.
+- Never assume a user is authenticated from local state alone.
+
+## API Client Security Rules
+
+Use the central API client in:
 
 ```txt
-Unaligned cards
-Random margins
-Floating sections without structure
-Huge empty hero sections inside the app
-Overly centered dashboard content
+src/lib/api.ts
 ```
 
-## Component Rules
+Do not write random `fetch()` calls inside pages or components unless there is a clear reason.
 
-Use shadcn/ui-style components consistently.
+The API client must:
 
-Preferred components:
+- Use `NEXT_PUBLIC_API_URL`.
+- Include `credentials: "include"` for Better Auth cookie sessions.
+- Handle JSON safely.
+- Handle empty responses safely.
+- Preserve `FormData` bodies for uploads.
+- Avoid logging sensitive response data.
+- Normalize errors before they reach UI components.
+- Never expose raw stack traces to users.
+
+Do not hard-code full backend URLs like:
 
 ```txt
-Button
-Card
-Dialog
-Dropdown
-Tabs
-Table
-Badge
-Input
-Textarea
-Select
-Progress
-Toast
-Tooltip
-Skeleton
-Avatar
-Sheet
-Command menu
+http://localhost:5000/api/projects
 ```
 
-Do not invent a new card, button, badge, or input style on every screen.
-
-Do not create unnecessary components before they are needed.
-
-## Button Rules
-
-Use clear button hierarchy.
-
-Button types:
+Use endpoint paths instead:
 
 ```txt
-Primary: main action
-Secondary: supporting action
-Ghost: low-emphasis action
-Destructive: dangerous action
+/api/projects
 ```
 
-Examples:
+## Data Access Rules
+
+The frontend must only request data the current user is allowed to see.
+
+Normal users should only see their own:
 
 ```txt
-Upload Video = Primary
-View Details = Secondary
-Cancel = Ghost
-Delete Project = Destructive
+Projects
+Uploads
+Processing jobs
+Generated videos
+Notifications
+Settings
 ```
 
-Avoid multiple primary buttons in the same section unless there is a strong reason.
+Do not create UI that implies users can access other users’ projects unless an explicit admin phase adds that behavior.
 
-## Card Rules
+Do not add admin UI early.
 
-Cards should be functional, not decorative.
+Do not add hidden admin links or fake admin screens.
 
-Every card must have a purpose:
+## Input Validation Rules
+
+Use client-side validation for user experience.
+
+Use Zod and React Hook Form when their assigned phase begins.
+
+Frontend validation should cover:
 
 ```txt
-Project card
-Generated video card
-Upload card
-Processing status card
-Stats card
-Notification card
-Settings card
+Required fields
+String lengths
+Supported video file types
+Maximum upload size display
+Enum values
+Basic form shape
 ```
 
-Each card should have:
+Backend validation is still required.
+
+Do not assume frontend validation makes the request safe.
+
+Do not pass unsanitized form data into UI, URLs, or file paths.
+
+## XSS and Unsafe HTML Rules
+
+Treat all user-generated and AI-generated content as untrusted.
+
+This includes:
 
 ```txt
-Clear title
-Useful status or metadata
-One clear action
-Consistent padding
-Subtle border
+Project titles
+Project descriptions
+Uploaded filenames
+Transcript text
+Caption text
+Generated titles
+Generated summaries
+Notification messages
+LLM-generated text later
 ```
 
-Do not create cards just to fill space.
+Do not use:
 
-## Frontend Folder Structure
+```tsx
+dangerouslySetInnerHTML;
+```
+
+unless explicitly required and sanitized with an approved sanitizer.
+
+Do not render transcript or caption text as raw HTML.
+
+Render user-generated text as plain text.
+
+Escape or sanitize content before display.
+
+## File Upload UI Security Rules
+
+The frontend upload UI must match backend restrictions.
+
+Allowed video extensions:
+
+```txt
+.mp4
+.mov
+.mkv
+.webm
+```
+
+Allowed MIME types:
+
+```txt
+video/mp4
+video/quicktime
+video/x-matroska
+video/webm
+```
+
+Upload field name must be:
+
+```txt
+video
+```
+
+Frontend upload rules:
+
+- Show allowed file types.
+- Show max upload size.
+- Reject unsupported files for user experience.
+- Do not trust the original filename.
+- Do not generate storage paths on the frontend.
+- Do not send client-chosen storage paths to the backend.
+- Do not upload directly to storage unless the backend provides a signed URL later.
+
+Backend must still validate every upload.
+
+## Video and Media Display Rules
+
+Only display video URLs returned by the Express API Gateway.
+
+Do not allow arbitrary user-entered video URLs to be embedded directly.
+
+Do not render arbitrary iframes.
+
+Do not autoplay generated videos with sound.
+
+Do not expose internal filesystem paths.
+
+If using object URLs for local previews:
+
+- Revoke object URLs when no longer needed.
+- Do not treat local preview as uploaded state.
+- Do not store object URLs in persistent state.
+
+## Processing Progress Rules
+
+Processing progress must come from backend job state.
+
+Use backend job polling later:
+
+```txt
+GET /api/jobs/:id
+GET /api/projects/:id/jobs
+```
+
+Do not fake processing progress once real job integration begins.
+
+Do not store processing progress only in frontend state.
+
+Refresh recovery should work by refetching backend job status.
+
+This feature is called:
+
+```txt
+Persistent processing job state with polling-based progress recovery
+```
+
+## TanStack Query Rules
+
+Use TanStack Query for server state.
+
+Do not put sensitive data into query keys.
+
+Avoid query keys like:
+
+```txt
+["user", fullSessionObject]
+["auth", token]
+```
+
+Use safe identifiers only:
+
+```txt
+["projects"]
+["project", projectId]
+["job", jobId]
+["notifications"]
+```
+
+Do not persist the TanStack Query cache to localStorage unless explicitly requested and reviewed for sensitive data.
+
+Do not cache sensitive data longer than necessary.
+
+## Error Display Rules
+
+Show safe, useful error messages.
+
+Do not display:
+
+```txt
+Raw stack traces
+Raw Prisma errors
+Raw database errors
+Raw backend logs
+Full internal response bodies
+Secrets
+Tokens
+Cookies
+```
+
+Good error messages:
+
+```txt
+Upload failed. Please try again.
+Your session expired. Please sign in again.
+This project could not be found.
+You do not have access to this project.
+Processing failed. Please try again later.
+```
+
+Do not leak whether another user’s private project exists.
+
+## Logging Rules
+
+Do not leave noisy logs in production code.
+
+Do not log:
+
+```txt
+Session objects
+Cookies
+Tokens
+Auth headers
+API responses containing private data
+Uploaded file contents
+Full FormData payloads
+Private user data
+```
+
+Temporary debugging logs must be removed before completing a phase.
+
+## Dependency Security Rules
+
+Keep dependencies minimal.
+
+Do not add packages unless required by the current phase.
+
+Do not add:
+
+```txt
+analytics packages
+payment packages
+auth plugins
+upload libraries
+chart libraries
+state management libraries
+AI SDKs
+LLM SDKs
+```
+
+unless the current phase explicitly requires them.
+
+Do not disable TypeScript or ESLint to make builds pass.
+
+Do not use abandoned or unnecessary packages when built-in browser or Next.js features are enough.
+
+## Browser Storage Rules
+
+Avoid storing sensitive data in browser storage.
+
+Do not store:
+
+```txt
+Auth tokens
+Session IDs
+User secrets
+Backend secrets
+Private API keys
+Raw transcripts if not needed
+Generated private video URLs if not needed
+```
+
+Theme preference may be stored by `next-themes`.
+
+Non-sensitive UI preferences are acceptable.
+
+## Admin UI Security Rules
+
+Do not add admin UI until the assigned admin phase.
+
+When admin UI is added later:
+
+- Hide admin navigation from non-admin users.
+- Still rely on backend authorization.
+- Do not expose admin-only API calls to normal UI flows.
+- Do not show fake admin stats.
+- Do not create fake admin users.
+- Do not allow role changes from the frontend unless backend explicitly supports it.
+
+## Payment UI Security Rules
+
+Do not add payment integration until the assigned payment phase.
+
+When payments are added later:
+
+- Use Stripe or another approved provider.
+- Keep secret keys in the backend only.
+- Frontend may only use publishable keys if required.
+- Webhooks must be handled by the backend.
+- Subscription status must come from the backend.
+- Do not trust frontend-selected plan values without backend validation.
+
+## Anti-AI-Slop Frontend Rules
+
+Do not add UI that pretends functionality exists before it is real.
+
+Do not add:
+
+```txt
+Fake protected routes
+Fake user sessions
+Fake admin controls
+Fake billing status
+Fake processing progress
+Fake upload success
+Fake generated video records
+Fake notification counts
+Fake analytics
+Fake metrics
+Fake charts
+Fake testimonials
+Fake security badges
+Fake compliance claims
+```
+
+Placeholder UI is allowed only when clearly labeled as future functionality and does not pretend to be live data.
+
+## Expected Backend API Routes
+
+The frontend should eventually integrate with these Express API Gateway routes.
+
+Auth is handled by Better Auth under:
+
+```txt
+/api/auth/*
+```
+
+Custom API routes:
+
+```txt
+GET    /api/health
+GET    /api/me
+
+POST   /api/projects
+GET    /api/projects
+GET    /api/projects/:id
+PATCH  /api/projects/:id
+DELETE /api/projects/:id
+
+POST   /api/projects/:id/upload
+POST   /api/projects/:id/process
+
+GET    /api/jobs/:id
+GET    /api/projects/:id/jobs
+POST   /api/jobs/:id/cancel
+
+GET    /api/projects/:id/generated-videos
+GET    /api/generated-videos/:id
+
+GET    /api/notifications
+GET    /api/notifications/unread-count
+PATCH  /api/notifications/:id/read
+PATCH  /api/notifications/read-all
+```
+
+Do not invent frontend integration for backend features that do not exist yet.
+
+## API Response Shape
+
+Custom backend API routes should generally return:
+
+Success:
+
+```json
+{
+  "success": true,
+  "message": "Request completed successfully",
+  "data": {}
+}
+```
+
+Error:
+
+```json
+{
+  "success": false,
+  "message": "Error message",
+  "errors": []
+}
+```
+
+Better Auth routes may use Better Auth’s own response format.
+
+The frontend API client should normalize errors before they reach UI components.
+
+## Backend Status Values
+
+Project status values:
+
+```txt
+draft
+uploaded
+queued
+processing
+completed
+failed
+```
+
+Processing job status values:
+
+```txt
+queued
+processing
+completed
+failed
+cancelled
+```
+
+Generated video status values:
+
+```txt
+pending
+rendering
+ready
+failed
+```
+
+Generated video types:
+
+```txt
+summary
+reel
+```
+
+Notification types:
+
+```txt
+video_uploaded
+processing_started
+processing_completed
+processing_failed
+generated_video_ready
+```
+
+User roles:
+
+```txt
+admin
+creator
+editor
+```
+
+Do not invent new frontend status strings unless the backend schema is intentionally updated.
+
+## Recommended Frontend Folder Structure
 
 Use this structure:
 
 ```txt
 repurposepro-frontend/
 ├── AGENTS.md
+├── DESIGN.md
 ├── README.md
 ├── package.json
 ├── next.config.ts
@@ -514,6 +931,7 @@ repurposepro-frontend/
     │   ├── ui/
     │   ├── layout/
     │   ├── common/
+    │   ├── providers/
     │   └── feedback/
     ├── features/
     │   ├── auth/
@@ -527,184 +945,50 @@ repurposepro-frontend/
     ├── hooks/
     ├── lib/
     │   ├── api.ts
-    │   ├── auth.ts
+    │   ├── auth-client.ts
+    │   ├── constants.ts
     │   ├── query-client.ts
-    │   ├── utils.ts
-    │   └── constants.ts
+    │   └── utils.ts
     ├── schemas/
     ├── types/
     └── styles/
 ```
 
-Create folders only when needed for the current phase.
+Do not create all folders immediately unless the current phase needs them.
 
-Do not fill folders with placeholder files just to match the structure.
-
-## API Rules
-
-All backend calls should use the central API client or feature-specific API modules.
-
-Expected Express API Gateway routes include:
-
-```txt
-GET    /api/health
-
-GET    /api/me
-
-POST   /api/projects
-GET    /api/projects
-GET    /api/projects/:id
-PATCH  /api/projects/:id
-DELETE /api/projects/:id
-
-POST   /api/projects/:id/upload
-POST   /api/projects/:id/process
-
-GET    /api/jobs/:id
-GET    /api/projects/:id/jobs
-POST   /api/jobs/:id/cancel
-
-GET    /api/projects/:id/generated-videos
-GET    /api/generated-videos/:id
-
-GET    /api/notifications
-GET    /api/notifications/unread-count
-PATCH  /api/notifications/:id/read
-PATCH  /api/notifications/read-all
-```
-
-Better Auth owns auth routes under:
-
-```txt
-/api/auth/*
-```
-
-Do not manually invent frontend calls to custom auth routes unless the backend actually exposes them.
-
-## API Client Rules
-
-The API client should:
-
-- Use `NEXT_PUBLIC_API_URL`
-- Include credentials for cookie-based auth
-- Normalize errors
-- Return typed responses where practical
-- Avoid repeating fetch logic inside components
-- Avoid hard-coded endpoint URLs scattered across pages
-
-Expected behavior for cookie/session auth:
-
-```txt
-credentials: "include"
-```
-
-## Authentication Rules
-
-Use Better Auth client integration.
-
-Auth requirements:
-
-```txt
-Login
-Sign up
-Logout
-Current user/session
-Protected dashboard routes
-Redirect unauthenticated users to login
-Redirect authenticated users away from login/signup when appropriate
-```
-
-Do not build custom JWT authentication.
-
-Do not store passwords, session tokens, or cookies in localStorage.
-
-Do not expose session secrets.
-
-## Data Fetching Rules
-
-Use TanStack Query for server state.
-
-Use local React state for UI-only state.
-
-Avoid unnecessary global state.
-
-Recommended query domains:
-
-```txt
-auth
-projects
-uploads
-jobs
-generatedVideos
-notifications
-user
-```
-
-Use stable query keys.
-
-Invalidate or refetch related queries after mutations.
-
-Examples:
-
-```txt
-After creating a project → invalidate projects query
-After uploading video → invalidate project detail query
-After starting processing → invalidate jobs and project detail queries
-After marking notification as read → invalidate notifications and unread count
-```
-
-## Forms Rules
+## State Management Rules
 
 Use:
 
-```txt
-React Hook Form
-Zod validation
-Inline field errors
-Disabled submit while loading
-Clear success/error toast
-```
+- React local state for local UI state
+- TanStack Query for server state
+- Better Auth client for auth/session state
+- next-themes for theme state
 
-Project creation should stay simple:
+Do not add Redux, Zustand, Jotai, or other state libraries unless explicitly requested.
 
-```txt
-Project title
-Description optional
-Create button
-```
+## Forms Rules
 
-Do not create huge forms when a short form is enough.
+Use React Hook Form and Zod when forms are added.
+
+Validate:
+
+- login input
+- signup input
+- project create/update input
+- upload form metadata if needed
+- settings forms
+
+Do not build custom form state management unless the form is trivial.
+
+Do not trust frontend validation as security.
 
 ## Upload Rules
 
-Upload must feel reliable.
-
-Required behavior:
+Upload flow must use the backend upload endpoint:
 
 ```txt
-Drag-and-drop support
-Manual file picker support
-File type validation
-File size validation
-Upload progress if practical
-Clear success state
-Clear failure state
-Start processing action after upload
-```
-
-Allowed formats:
-
-```txt
-.mp4
-.mov
-.mkv
-.webm
-```
-
-Maximum file size for MVP:
-
-```txt
-2048 MB
+POST /api/projects/:id/upload
 ```
 
 Upload field name must be:
@@ -713,382 +997,186 @@ Upload field name must be:
 video
 ```
 
-The frontend upload request must match:
+Allowed input video formats:
 
 ```txt
-POST /api/projects/:id/upload
+.mp4
+.mov
+.mkv
+.webm
 ```
 
-Use `FormData`.
+Show allowed formats to the user.
 
-Do not rename the upload field.
+Show max size to the user.
 
-## Project Rules
+Backend still enforces real validation.
 
-Projects should support:
+## Processing Job UI Rules
 
-```txt
-List projects
-Create project
-View project detail
-Edit project metadata if implemented
-Delete project if implemented
-Upload video to project
-Start processing
-View jobs
-View generated videos
-```
-
-Project statuses:
-
-```txt
-draft
-uploaded
-queued
-processing
-completed
-failed
-```
-
-Use clear status badges.
-
-Do not use color alone to communicate status.
-
-## Processing Job Rules
-
-Processing status UI should show:
-
-```txt
-Current step
-Progress bar
-Job status badge
-Started time
-Completed time if available
-Clear error message if failed
-```
-
-Processing job statuses:
-
-```txt
-queued
-processing
-completed
-failed
-cancelled
-```
-
-Do not show fake overly precise progress unless the backend provides it.
-
-Good:
-
-```txt
-Processing · 65%
-Generating reels
-```
-
-Bad:
-
-```txt
-AI is thinking magically...
-Enhancing creativity by 94.82%
-```
-
-## Generated Video Rules
-
-Generated videos should be the visual focus.
-
-Each generated output should show:
-
-```txt
-Video preview or thumbnail area
-Type badge: Summary or Reel
-Title
-Duration
-Aspect ratio
-Status
-Download button
-Preview button
-```
-
-Generated video types:
-
-```txt
-summary
-reel
-```
-
-Generated video statuses:
-
-```txt
-pending
-rendering
-ready
-failed
-```
-
-For reels, display them in a grid.
-
-For the summary video, give it more space than reels.
-
-Do not hide creator-facing outputs in a plain table unless it is an admin page.
-
-## Notification Rules
-
-Notifications should use backend notification routes.
-
-Expected routes:
-
-```txt
-GET   /api/notifications
-GET   /api/notifications/unread-count
-PATCH /api/notifications/:id/read
-PATCH /api/notifications/read-all
-```
-
-Notification types:
-
-```txt
-video_uploaded
-processing_started
-processing_completed
-processing_failed
-generated_video_ready
-```
-
-For MVP, use REST polling or refetching.
-
-Do not add WebSockets or Server-Sent Events unless explicitly requested.
-
-Notification messages should be direct:
-
-```txt
-Your video was uploaded successfully.
-Your summary and reels are ready.
-Processing failed. Please try again.
-```
-
-Avoid annoying notifications for every minor event.
-
-## Admin UI Rules
-
-Admin UI comes later.
-
-Do not build admin UI before the creator workflow works.
-
-If admin pages are added later, they should require:
-
-```txt
-Authenticated session
-role === "admin"
-```
-
-Admin pages may use tables and dense layouts.
-
-Creator-facing pages should prefer cards and visual previews.
-
-## Loading State Rules
-
-Use skeletons and progress indicators.
-
-Do not leave blank pages while loading.
+Processing state must come from backend job records.
 
 Use:
 
 ```txt
-Skeleton cards
-Loading spinner only for small actions
-Progress bars for uploads and processing
-Disabled buttons during submission
+GET /api/jobs/:id
+GET /api/projects/:id/jobs
 ```
 
-Avoid full-page spinners unless absolutely necessary.
+The frontend should support refresh recovery.
 
-## Empty State Rules
+If the user refreshes during processing, the frontend should refetch job status from the backend and show the current progress.
 
-Every major page needs a good empty state.
+Do not fake progress after backend integration begins.
 
-Empty states should include:
+TanStack Query polling should be used later for job status UI.
+
+## Generated Video UI Rules
+
+Generated video UI should show:
+
+- One summary video
+- Multiple reel videos
+- Type label
+- Duration
+- Aspect ratio
+- Status
+- Preview/download actions when available
+
+Do not invent generated videos.
+
+Only display generated videos returned by the backend.
+
+## Notifications UI Rules
+
+Notifications should come from backend records.
+
+Use:
 
 ```txt
-Simple icon or illustration
-Clear title
-Short explanation
-Primary action
+GET /api/notifications
+GET /api/notifications/unread-count
+PATCH /api/notifications/:id/read
+PATCH /api/notifications/read-all
 ```
 
-Example:
+Do not fake unread counts after notification integration begins.
+
+Do not show notification metadata directly if it contains internal IDs unless useful for debugging in development.
+
+## Settings UI Rules
+
+Settings should start simple.
+
+Allowed early settings:
+
+- Theme preference
+- Basic account display
+- Future placeholder for profile settings
+
+Do not add billing settings until payment phase.
+
+Do not add security settings unless backend supports them.
+
+Do not add team settings until team/org support exists.
+
+## Admin UI Rules
+
+Do not add admin UI until explicitly requested.
+
+Admin UI should come after core creator workflow works.
+
+Do not add:
 
 ```txt
-No projects yet
-
-Upload your first long-form video to generate a summary and reels.
-
-Button: Create Project
+User management
+Role management
+System metrics
+Job debugging dashboard
+Template management
+Billing admin
 ```
 
-Avoid generic empty text like:
+unless the assigned phase asks for it.
+
+## Payment Rules
+
+Do not add payment integration yet.
+
+Payments make sense later, after the core workflow works:
 
 ```txt
-No data found.
-Nothing here.
+Sign up
+→ Create project
+→ Upload video
+→ Start processing
+→ View generated outputs
+→ Download/export outputs
 ```
 
-## Error State Rules
+When payments are added later, prefer Stripe.
 
-Errors should be human-readable and actionable.
+Backend owns:
 
-Good:
+- subscription status
+- Stripe customer ID
+- webhook handling
+- usage limits
+- plan limits
 
-```txt
-Upload failed because the file type is not supported. Please upload an MP4, MOV, MKV, or WEBM file.
-```
+Frontend displays:
 
-Bad:
+- current plan
+- usage
+- upgrade action
+- billing portal link
 
-```txt
-Error: 400
-Something went wrong
-```
-
-Each error should tell the user:
-
-```txt
-What happened
-Why it might have happened
-What to do next
-```
+Do not add payment packages before the payment phase.
 
 ## Accessibility Rules
 
-Follow basic accessibility rules.
+Build accessible UI.
 
-Required:
+Use:
 
-```txt
-Keyboard-accessible buttons
-Visible focus states
-Readable contrast
-Labels for inputs
-Alt text for meaningful images
-ARIA only when needed
-No color-only status indicators
-```
+- semantic HTML
+- labels for inputs
+- keyboard-accessible controls
+- visible focus states
+- appropriate ARIA only when needed
+- sufficient contrast
+- descriptive button text
+- meaningful page headings
 
-Status badges should use both color and text.
+Do not remove focus outlines unless replacing them with clear custom focus styles.
 
-Example:
-
-```txt
-Green badge with text: Completed
-Red badge with text: Failed
-```
+For detailed visual accessibility guidance, use `DESIGN.md`.
 
 ## Responsive Rules
 
-The app must work on:
+Desktop should feel polished first.
 
-```txt
-Desktop
-Laptop
-Tablet
-Mobile
-```
+Mobile should remain usable.
 
-Desktop-first is acceptable, but mobile should not be broken.
+Do not overbuild complex mobile navigation early.
 
-Responsive behavior:
+Responsive polish has its own later phase.
 
-```txt
-Sidebar collapses on smaller screens
-Cards stack on mobile
-Tables become scrollable
-Video grids reduce columns
-Upload area remains usable
-```
+Avoid layouts that break completely on smaller screens.
 
-## Animation Rules
+For detailed responsive design guidance, use `DESIGN.md`.
 
-Use motion sparingly.
+## Loading, Empty, and Error State Rules
 
-Good animations:
+Use clear loading, empty, and error states.
 
-```txt
-Button hover
-Dropdown open
-Dialog transition
-Upload progress
-Toast entrance
-Card hover lift
-```
+Do not show fake data while loading.
 
-Avoid:
+Do not expose backend internals in errors.
 
-```txt
-Constant moving backgrounds
-Random floating objects
-Excessive page transitions
-Bouncy animations everywhere
-```
+Do not use generic placeholder copy.
 
-Animations should make the product feel smoother, not childish.
-
-## Icon Rules
-
-Use Lucide React icons.
-
-Use icons to support meaning, not decorate every line.
-
-Good icon usage:
-
-```txt
-Upload
-Video
-Scissors
-Bell
-Settings
-User
-Check
-Alert
-Download
-Play
-```
-
-Avoid:
-
-```txt
-Sparkles everywhere
-Random magic wand icons on every AI feature
-Multiple icon styles
-Emoji used as primary UI icons
-```
-
-## Copywriting Rules
-
-Use clear, direct product copy.
-
-Tone:
-
-```txt
-Helpful
-Confident
-Simple
-Creator-focused
-Professional
-```
-
-Good copy:
-
-```txt
-Upload a long-form video and RepurposePro will generate a summary and short reels.
-```
-
-Bad copy:
-
-```txt
-Experience the future of next-generation AI-powered viral content magic.
-```
-
-Avoid buzzwords unless they explain real functionality.
+For visual and UX patterns for these states, use `DESIGN.md`.
 
 ## Frontend Build Order
 
@@ -1115,340 +1203,299 @@ Build the frontend in this order:
 19. Responsive polish
 20. Accessibility and error-state polish
 21. Admin UI later
-
-Do not jump ahead.
-
-If asked for Phase 1, build only Phase 1.
-
-If asked for Phase 2, build only Phase 2.
+22. Payment UI later
 
 ## Current Phase Guidance
 
-### Frontend Phase 1 — Next.js Foundation
+When working on a phase, build only that phase.
+
+Do not jump ahead.
+
+### Phase 1 — Next.js Foundation
 
 For Phase 1:
 
-- Create the base Next.js app.
+- Create the clean Next.js project.
 - Use TypeScript.
 - Use App Router.
 - Use `src/` directory.
-- Add basic project scripts.
+- Use import alias `@/*`.
 - Add `.env.example`.
-- Add basic README setup instructions.
-- Create a minimal root page.
-- Do not add Tailwind custom design yet beyond default setup if already installed.
-- Do not add shadcn/ui yet unless the initialization requires it.
-- Do not add layout/sidebar/header yet.
-- Do not add API client yet.
-- Do not add TanStack Query yet.
-- Do not add Better Auth yet.
-- Do not add dashboard pages yet.
+- Add basic root page.
+- Add basic metadata.
+- Add Google Font through `next/font/google`.
+- Do not add Tailwind customization unless generated automatically.
+- Do not add shadcn/ui yet.
+- Do not add dashboard.
+- Do not add auth.
+- Do not add API calls.
 
-### Frontend Phase 2 — Tailwind CSS and shadcn/ui Foundation
+### Phase 2 — Tailwind CSS and shadcn/ui Foundation
 
 For Phase 2:
 
-- Configure Tailwind CSS.
-- Initialize shadcn/ui.
-- Add base global CSS variables.
+- Add Tailwind CSS.
+- Add shadcn/ui setup.
 - Add `cn` utility.
-- Add only essential UI components:
-  - Button
-  - Card
-  - Input
-  - Label
-  - Badge
+- Add base CSS variables.
+- Add initial UI components:
+  - button
+  - card
+  - input
+  - label
+  - badge
 
-- Keep styling dark-first.
-- Do not build the dashboard layout yet.
-- Do not add auth yet.
-- Do not add API calls yet.
+- Keep dark-first styling according to `DESIGN.md`.
+- Do not add dashboard.
+- Do not add auth.
+- Do not add API calls.
+- Do not add TanStack Query.
 
-### Frontend Phase 3 — Theme System
+### Phase 3 — Theme System
 
 For Phase 3:
 
 - Add `next-themes`.
-- Create `ThemeProvider`.
-- Add dark mode as default.
-- Add light/dark/system support.
-- Add a simple theme toggle component.
-- Ensure global styles work in dark and light mode.
-- Do not add dashboard layout yet.
-- Do not add auth yet.
-- Do not add API calls yet.
+- Add ThemeProvider.
+- Set dark mode as default.
+- Support light/dark/system.
+- Add simple theme toggle.
+- Do not add dashboard logic.
+- Do not add auth.
+- Do not add API calls.
 
-### Frontend Phase 4 — Base Layout, Sidebar, and Header
+### Phase 4 — Base Layout, Sidebar, and Header
 
 For Phase 4:
 
-- Create app shell layout.
-- Create sidebar.
-- Create header.
 - Add dashboard route group.
+- Add app shell.
+- Add sidebar.
+- Add header.
 - Add placeholder dashboard pages.
-- Add navigation items:
-  - Dashboard
-  - Projects
-  - Upload
-  - Results
-  - Notifications
-  - Settings
-
-- Use Lucide icons.
-- Keep pages as placeholders only.
+- Add theme toggle to header.
 - Do not add auth protection yet.
-- Do not add API calls yet.
+- Do not add backend calls.
+- Do not add real data.
 
-### Frontend Phase 5 — API Client Setup
+### Phase 5 — API Client Setup
 
 For Phase 5:
 
 - Add central API client.
-- Use `NEXT_PUBLIC_API_URL`.
-- Include credentials for cookie-based auth.
-- Normalize API errors.
 - Add shared API response types.
-- Add constants.
-- Do not call backend from UI pages yet except possibly health check if requested.
-- Do not add TanStack Query yet unless requested.
+- Use `NEXT_PUBLIC_API_URL`.
+- Include `credentials: "include"`.
+- Normalize errors.
+- Support JSON and FormData.
+- Do not call backend from UI yet.
+- Do not add feature API modules yet.
 
-### Frontend Phase 6 — TanStack Query Provider
+### Phase 6 — TanStack Query Provider
 
 For Phase 6:
 
 - Add TanStack Query.
-- Create query client.
-- Add provider to app.
-- Add query key constants.
-- Do not implement feature data fetching yet.
-- Do not add auth yet.
+- Add QueryClient setup.
+- Add QueryClientProvider.
+- Add safe defaults.
+- Do not add real queries yet.
+- Do not add job polling yet.
 
-### Frontend Phase 7 — Better Auth Client Integration
+### Phase 7 — Better Auth Client Integration
 
 For Phase 7:
 
-- Add Better Auth client setup.
-- Add session/current-user support.
-- Add auth utility hooks if needed.
-- Do not build full login/signup UI yet unless required by integration.
-- Do not build protected routes yet.
-- Do not store tokens in localStorage.
+- Add Better Auth client dependency.
+- Add central auth client.
+- Export `useSession`, `signIn`, `signUp`, and `signOut` helpers if appropriate.
+- Do not create login/signup pages yet.
+- Do not protect routes yet.
+- Do not store auth tokens in localStorage or sessionStorage.
 
-### Frontend Phase 8 — Login and Sign-up Pages
+### Phase 8 — Login and Sign-Up Pages
 
 For Phase 8:
 
-- Build login page.
-- Build sign-up page.
+- Add login page.
+- Add sign-up page.
 - Use Better Auth client.
-- Use React Hook Form and Zod.
-- Show validation errors.
-- Show loading and error states.
-- Redirect authenticated users appropriately.
-- Do not build dashboard data features yet.
+- Use React Hook Form and Zod if needed.
+- Show safe error messages.
+- Do not require email validation codes unless explicitly added.
+- Do not add protected dashboard yet.
 
-### Frontend Phase 9 — Protected Dashboard Route Layout
+### Phase 9 — Protected Dashboard Route Layout
 
 For Phase 9:
 
-- Protect dashboard routes.
+- Protect dashboard route group.
 - Redirect unauthenticated users to login.
-- Show loading state while checking session.
-- Add logout action.
-- Show user info in header if available.
-- Do not add project API features yet.
+- Show safe loading state while session is loading.
+- Do not expose dashboard data before session is confirmed.
+- Add logout UI if appropriate.
+- Do not add project CRUD yet.
 
-### Frontend Phase 10 — Dashboard Overview Page
+### Phase 10 — Dashboard Overview Page
 
 For Phase 10:
 
-- Build dashboard overview page.
-- Use real backend data only if relevant endpoints exist.
-- Prefer empty states over fake data.
-- Show:
-  - recent projects placeholder or real projects
-  - processing jobs placeholder or real jobs
-  - generated videos ready placeholder or real data
-  - upload CTA
+- Build real dashboard overview structure.
+- Use backend data only when available.
+- Do not fake metrics.
+- Do not fake charts.
+- Do not fake analytics.
+- Keep dashboard creator-focused.
 
-- Do not add fake metrics.
-
-### Frontend Phase 11 — Projects List Page
+### Phase 11 — Projects List Page
 
 For Phase 11:
 
-- Add projects API module.
-- Fetch projects from backend.
-- Show project cards or clean list.
-- Add loading state.
-- Add empty state.
-- Add error state.
-- Add filters/search only if practical.
-- Do not add create project flow unless requested in this phase.
+- Add project fetching.
+- Display authenticated user’s projects.
+- Use TanStack Query.
+- Use central API client.
+- Add loading, empty, and error states.
+- Do not show other users’ projects.
 
-### Frontend Phase 12 — Create Project Flow
+### Phase 12 — Create Project Flow
 
 For Phase 12:
 
-- Add create project form.
+- Add create project UI.
 - Use React Hook Form and Zod.
 - Call `POST /api/projects`.
-- Invalidate projects query after success.
-- Redirect to project detail or projects list after success.
-- Keep form simple:
-  - title
-  - description optional
+- Redirect or update list after success.
+- Do not add upload yet unless assigned.
 
-### Frontend Phase 13 — Project Detail Page
+### Phase 13 — Project Detail Page
 
 For Phase 13:
 
 - Add project detail route.
-- Fetch project by ID.
+- Fetch single project.
+- Show project status.
 - Show project metadata.
-- Show status badge.
-- Show upload status.
-- Show processing jobs section placeholder or real list if already available.
-- Show generated videos section placeholder or real list if already available.
-- Do not implement upload logic yet unless requested.
+- Enforce safe loading/error states.
+- Do not fake generated videos.
 
-### Frontend Phase 14 — Upload Video Flow
+### Phase 14 — Upload Video Flow
 
 For Phase 14:
 
-- Add upload UI for a project.
-- Use drag-and-drop and file picker.
-- Validate file extension and size.
-- Upload with `FormData`.
-- Field name must be `video`.
-- Call `POST /api/projects/:id/upload`.
-- Show upload progress if practical.
-- Invalidate project detail after upload.
-- Show start processing CTA after successful upload if route exists.
+- Add video upload UI.
+- Use upload field name `video`.
+- Validate file type client-side for UX.
+- Show max upload size.
+- Upload through Express API Gateway.
+- Do not call FastAPI.
+- Do not generate storage paths on frontend.
 
-### Frontend Phase 15 — Processing Job Status UI
+### Phase 15 — Processing Job Status UI
 
 For Phase 15:
 
 - Add start processing action.
-- Call `POST /api/projects/:id/process`.
-- Fetch project jobs from:
-  - `GET /api/projects/:id/jobs`
+- Add job status display.
+- Add progress percentage.
+- Add current step display.
+- Use backend job polling.
+- Support refresh recovery by refetching backend job state.
+- Do not fake progress after integration.
 
-- Fetch job detail from:
-  - `GET /api/jobs/:id`
-
-- Show status badge, progress, current step, error message.
-- Poll while job is queued or processing.
-- Stop polling when completed, failed, or cancelled.
-
-### Frontend Phase 16 — Generated Video Results UI
+### Phase 16 — Generated Video Results UI
 
 For Phase 16:
 
-- Fetch generated videos from:
-  - `GET /api/projects/:id/generated-videos`
+- Fetch generated videos.
+- Show summary video and reels.
+- Show status, type, duration, and aspect ratio.
+- Add preview/download UI only when supported by backend.
+- Do not invent generated videos.
 
-- Display summary video prominently.
-- Display reels in a grid.
-- Show title, duration, aspect ratio, status, preview/download actions.
-- Use placeholders only when output URLs are not playable yet.
-- Do not fake generated video records.
-
-### Frontend Phase 17 — Notifications Dropdown/Page
+### Phase 17 — Notifications Dropdown/Page
 
 For Phase 17:
 
 - Fetch notifications.
 - Fetch unread count.
-- Add notification bell.
-- Add dropdown or page.
-- Add mark as read.
-- Add mark all as read.
-- Invalidate notification queries after mutation.
-- Use REST refetching/polling only.
-- Do not add WebSockets or SSE.
+- Mark notification as read.
+- Mark all as read.
+- Do not fake unread counts.
+- Keep notification messages safe.
 
-### Frontend Phase 18 — Settings Page
+### Phase 18 — Settings Page
 
 For Phase 18:
 
-- Add settings page.
-- Include theme toggle.
-- Include basic profile/account display if auth data exists.
-- Do not add billing.
-- Do not add social publishing settings.
-- Do not add unsupported preferences.
+- Add basic settings page.
+- Include theme/account preferences.
+- Do not add billing unless payment phase exists.
+- Do not add team/org settings unless backend supports them.
 
-### Frontend Phase 19 — Responsive Polish
+### Phase 19 — Responsive Polish
 
 For Phase 19:
 
-- Improve mobile and tablet layouts.
-- Make sidebar collapsible.
-- Ensure cards stack properly.
-- Ensure tables scroll horizontally if used.
-- Ensure upload flow works on mobile.
-- Do not add new features.
+- Improve mobile layouts.
+- Improve sidebar/header responsiveness.
+- Improve dashboard page responsiveness.
+- Do not change core behavior unnecessarily.
 
-### Frontend Phase 20 — Accessibility and Error-State Polish
+### Phase 20 — Accessibility and Error-State Polish
 
 For Phase 20:
 
-- Review keyboard navigation.
-- Add visible focus states.
-- Improve labels and descriptions.
-- Improve empty states.
-- Improve error messages.
-- Improve loading states.
-- Remove any leftover placeholder or fake copy.
+- Improve keyboard navigation.
+- Improve focus states.
+- Improve form accessibility.
+- Improve loading/empty/error states.
+- Verify safe error messages.
+- Verify no private data leaks in UI.
 
-### Frontend Phase 21 — Admin UI Later
+### Phase 21 — Admin UI Later
 
 For Phase 21:
 
-- Add admin UI only if backend admin routes exist.
-- Protect admin routes by `role === "admin"`.
-- Use tables for admin users, projects, jobs, and notifications.
-- Do not build admin UI before creator workflow is stable.
+- Add admin UI only if explicitly requested.
+- Backend must support admin routes first.
+- Do not fake admin data.
+
+### Phase 22 — Payment UI Later
+
+For Phase 22:
+
+- Add payment UI only after core workflow works.
+- Backend must own payment security and webhooks.
+- Do not add Stripe secret keys to frontend.
 
 ## Testing Rules
 
 Add tests where practical.
 
-Recommended tools:
+Recommended areas:
 
-```txt
-Vitest
-React Testing Library
-Playwright later for end-to-end flows
-```
+- API client error handling
+- form validation
+- protected route behavior
+- upload validation
+- job polling behavior
+- notification actions
+- reusable components
 
-At minimum, test:
-
-```txt
-API utility functions
-Form validation schemas
-Important components
-Protected route behavior if practical
-```
-
-Do not spend excessive time on testing setup before the core frontend flow exists.
+Do not spend excessive time setting up test infrastructure unless requested.
 
 ## Documentation Rules
 
-Update documentation when adding:
+Update README when adding:
 
-```txt
-New environment variables
-New routes/pages
-New setup commands
-New API assumptions
-New frontend dependencies
-```
+- new environment variables
+- new dependencies
+- new setup commands
+- new major features
+- changed development workflow
 
-Keep `README.md` accurate.
+Keep documentation concise and accurate.
 
 ## Command Expectations
 
@@ -1458,47 +1505,85 @@ After making frontend changes, run:
 npm run build
 ```
 
-If available, also run:
+If lint exists, run:
 
 ```bash
 npm run lint
+```
+
+If tests exist, run:
+
+```bash
 npm run test
 ```
 
-Fix TypeScript, build, and lint errors before moving on.
+Fix errors caused by the current phase.
+
+Do not ignore TypeScript, build, or lint failures.
+
+## Frontend Secure Development Checklist
+
+Before completing any frontend phase, verify:
+
+```txt
+No secrets are exposed in frontend code.
+No FastAPI URL is used in the frontend.
+No auth tokens are stored in localStorage or sessionStorage.
+API calls use the central API client.
+API calls include credentials when needed.
+User-generated text is rendered safely.
+No dangerouslySetInnerHTML is used without sanitization.
+No fake private data is displayed.
+No fake security/billing/admin behavior is added.
+Errors shown to users are safe.
+Console logs do not expose private data.
+Build passes.
+Lint passes if configured.
+The product name remains RepurposePro.
+```
+
+## Frontend Anti-Slop Checklist
+
+Before completing any frontend phase, verify:
+
+```txt
+No fake metrics were added.
+No fake charts were added.
+No fake analytics were added.
+No fake testimonials were added.
+No fake generated videos were added.
+No fake notifications were added.
+No fake protected routes were added.
+No fake billing state was added.
+No fake admin data was added.
+No unnecessary dependencies were added.
+No unused components were added.
+No unrelated pages were added.
+No random dashboard widgets were added.
+No AI slop copy was added.
+```
 
 ## Do Not Do Unless Asked
 
 Do not:
 
 - Build multiple phases at once
-- Call the FastAPI AI Service directly from the frontend
-- Build custom JWT authentication
-- Store auth tokens in localStorage
-- Add payment UI
-- Add social media publishing UI before the core workflow works
-- Add admin UI before the creator workflow works
-- Add fake analytics
-- Add fake testimonials
-- Add unnecessary charts
-- Add over-designed AI marketing sections inside the app
-- Add random gradients and glowing blobs everywhere
-- Use inconsistent component styles
+- Add fake metrics or fake analytics
+- Add fake processing progress after backend integration
+- Add fake generated videos
+- Add fake notification counts
+- Add fake billing status
+- Add fake admin controls
+- Add dashboard charts before real analytics exist
+- Add payment integration before the payment phase
+- Add admin UI before the admin phase
+- Add social publishing before backend supports it
+- Add AI SDKs or LLM SDKs to the frontend
+- Call FastAPI directly from the frontend
+- Expose secrets in frontend environment variables
+- Store auth tokens in localStorage or sessionStorage
+- Use custom JWT auth instead of Better Auth
+- Use `dangerouslySetInnerHTML` without sanitization
+- Disable TypeScript or ESLint to pass builds
+- Add unnecessary dependencies
 - Change the product name from RepurposePro
-
-## Final Design Principle
-
-RepurposePro should not feel like an AI-generated template.
-
-It should feel like a real tool creators would use every day to turn long videos into finished, downloadable content.
-
-Prioritize:
-
-```txt
-Workflow clarity
-Video previews
-Processing transparency
-Clean design
-Consistent components
-Real product usefulness
-```
