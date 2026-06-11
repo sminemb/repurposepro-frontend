@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/common/theme-toggle";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,7 +17,7 @@ export default function Home() {
       <Card className="w-full max-w-xl">
         <CardHeader>
           <Badge variant="secondary" className="mb-3 w-fit">
-            Phase 3
+            Phase 4
           </Badge>
           <CardTitle className="text-3xl tracking-tight">
             RepurposePro
@@ -26,9 +29,14 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-5">
           <p className="text-sm font-medium text-primary">
-            Theme system is ready.
+            Dashboard layout is ready.
           </p>
-          <ThemeToggle />
+          <div className="flex flex-wrap items-center gap-3">
+            <Button asChild>
+              <Link href="/dashboard">Go to dashboard</Link>
+            </Button>
+            <ThemeToggle />
+          </div>
         </CardContent>
       </Card>
     </main>
