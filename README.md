@@ -1,6 +1,6 @@
 # RepurposePro Frontend
 
-RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 6 TanStack Query provider foundation.
+RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 7 Better Auth client foundation.
 
 ## Current Tech Stack
 
@@ -12,6 +12,7 @@ RepurposePro is a creator workspace for turning long-form videos into summaries 
 - shadcn/ui
 - next-themes
 - TanStack Query
+- Better Auth
 - Vitest
 
 Phase 2 added dark-first semantic design tokens and the essential `Button`, `Card`, `Input`, `Label`, and `Badge` UI components.
@@ -23,6 +24,8 @@ Phase 4 adds the responsive app shell, sidebar and header, and placeholder pages
 Phase 5 adds the central typed API client, shared response contracts, and normalized error handling. Requests include credentials for future Better Auth cookie sessions. Feature-specific API modules are added in later phases.
 
 Phase 6 adds the shared TanStack Query client and wires `QueryClientProvider` through the app providers. Feature-specific queries will be added in later phases, with processing job polling planned for Frontend Phase 15.
+
+Phase 7 adds the Better Auth React client, session hook, and sign-in, sign-up, and sign-out helpers. Better Auth requests go through the Express API Gateway. Login and sign-up pages come in Frontend Phase 8, and dashboard route protection comes in Frontend Phase 9. Email validation codes are not part of the MVP unless explicitly added later.
 
 ## Environment
 
