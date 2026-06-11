@@ -1,6 +1,6 @@
 # RepurposePro Frontend
 
-RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 4 dashboard-layout foundation.
+RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 5 API-client foundation.
 
 ## Current Tech Stack
 
@@ -11,6 +11,7 @@ RepurposePro is a creator workspace for turning long-form videos into summaries 
 - Tailwind CSS 4
 - shadcn/ui
 - next-themes
+- Vitest
 
 Phase 2 added dark-first semantic design tokens and the essential `Button`, `Card`, `Input`, `Label`, and `Badge` UI components.
 
@@ -18,15 +19,17 @@ Phase 3 adds `next-themes` with dark mode as the default and supports light, dar
 
 Phase 4 adds the responsive app shell, sidebar and header, and placeholder pages for the creator workspace routes.
 
+Phase 5 adds the central typed API client, shared response contracts, and normalized error handling. Requests include credentials for future Better Auth cookie sessions. Feature-specific API modules are added in later phases.
+
 ## Environment
 
-The frontend will communicate only with the Express API Gateway. Add this variable to the local environment when backend integration begins:
+The frontend communicates only with the Express API Gateway. Add this required variable to the local environment:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
-See `.env.example` for the required value. Backend integration starts in a later phase.
+See `.env.example` for the required value.
 
 ## Setup
 
@@ -44,4 +47,5 @@ The local Express API Gateway is expected at [http://localhost:5000](http://loca
 ```bash
 npm run build
 npm run lint
+npm run test
 ```
