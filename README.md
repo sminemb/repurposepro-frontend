@@ -7,7 +7,7 @@ RepurposePro is a creator workspace for turning long-form videos into summaries 
 - Next.js (App Router)
 - TypeScript
 - ESLint
-- Google Font through `next/font/google`
+- Google Fonts through `next/font/google`
 - Tailwind CSS 4
 - shadcn/ui
 - next-themes
