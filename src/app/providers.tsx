@@ -5,12 +5,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem
-      disableTransitionOnChange
-    >
+    <ThemeProvider>
       <QueryProvider>{children}</QueryProvider>
     </ThemeProvider>
   );

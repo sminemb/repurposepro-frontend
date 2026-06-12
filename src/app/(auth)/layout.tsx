@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { ThemeToggle } from "@/components/common/theme-toggle";
-
 export default function AuthLayout({
   children,
 }: Readonly<{
@@ -9,9 +7,6 @@ export default function AuthLayout({
 }>) {
   return (
     <div className="relative min-h-screen px-4 py-8 sm:px-6">
-      <div className="flex justify-end">
-        <ThemeToggle />
-      </div>
       <main className="mx-auto flex w-full max-w-md flex-col gap-6 py-12 sm:py-16">
         <div className="space-y-2 text-center">
           <Link

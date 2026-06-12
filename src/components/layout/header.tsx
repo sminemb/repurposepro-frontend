@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { LogOut, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/common/theme-toggle";
 import { signOut, useSession } from "@/lib/auth-client";
 
 export function Header() {
@@ -48,7 +47,6 @@ export function Header() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <ThemeToggle />
           <div
             className="flex h-9 max-w-52 items-center gap-2 rounded-lg border bg-card px-3 text-sm font-medium"
             aria-label={`Signed in as ${displayName}`}

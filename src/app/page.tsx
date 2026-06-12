@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
-import { ThemeToggle } from "@/components/common/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -41,7 +40,6 @@ export default function Home() {
             <Button asChild variant="ghost">
               <Link href="/dashboard">Open dashboard</Link>
             </Button>
-            <ThemeToggle />
           </div>
         </CardContent>
       </Card>

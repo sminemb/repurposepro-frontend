@@ -19,7 +19,7 @@ RepurposePro is a creator workspace for turning long-form videos into summaries 
 
 Phase 2 added dark-first semantic design tokens and the essential `Button`, `Card`, `Input`, `Label`, and `Badge` UI components.
 
-Phase 3 adds `next-themes` with dark mode as the default and supports light, dark, and system theme modes.
+Phase 3 adds `next-themes`. The app follows the user's system theme automatically, and no manual theme toggle is shown.
 
 Phase 4 adds the responsive app shell, sidebar and header, and placeholder pages for the creator workspace routes.
 
