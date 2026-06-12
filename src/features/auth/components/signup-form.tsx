@@ -21,10 +21,17 @@ import {
   signupSchema,
   type SignupFormValues,
 } from "@/features/auth/schemas/auth.schema";
+import { getSafeRedirectPath } from "@/features/auth/utils/redirect";
 import { signUp } from "@/lib/auth-client";
 
-export function SignupForm() {
+type SignupFormProps = {
+  redirectPath?: string;
+};
+
+export function SignupForm({ redirectPath }: SignupFormProps) {
   const router = useRouter();
+  const safeRedirectPath = getSafeRedirectPath(redirectPath);
+  const loginHref = `/login?redirect=${encodeURIComponent(safeRedirectPath)}`;
   const [submitError, setSubmitError] = React.useState<string | null>(null);
   const {
     formState: { errors, isSubmitting },
@@ -51,7 +58,11 @@ export function SignupForm() {
         return;
       }
 
-      router.replace(result.data?.token ? "/dashboard" : "/login?signup=success");
+      router.replace(
+        result.data?.token
+          ? safeRedirectPath
+          : `/login?signup=success&redirect=${encodeURIComponent(safeRedirectPath)}`,
+      );
       router.refresh();
     } catch {
       setSubmitError(getSignupErrorMessage());
@@ -187,7 +198,7 @@ export function SignupForm() {
       <CardFooter className="justify-center border-t pt-6 text-sm text-muted-foreground">
         Already have an account?{" "}
         <Link
-          href="/login"
+          href={loginHref}
           className="ml-1 font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Sign in

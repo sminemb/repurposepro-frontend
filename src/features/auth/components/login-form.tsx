@@ -21,14 +21,21 @@ import {
   loginSchema,
   type LoginFormValues,
 } from "@/features/auth/schemas/auth.schema";
+import { getSafeRedirectPath } from "@/features/auth/utils/redirect";
 import { signIn } from "@/lib/auth-client";
 
 type LoginFormProps = {
+  redirectPath?: string;
   signupSucceeded?: boolean;
 };
 
-export function LoginForm({ signupSucceeded = false }: LoginFormProps) {
+export function LoginForm({
+  redirectPath,
+  signupSucceeded = false,
+}: LoginFormProps) {
   const router = useRouter();
+  const safeRedirectPath = getSafeRedirectPath(redirectPath);
+  const signupHref = `/signup?redirect=${encodeURIComponent(safeRedirectPath)}`;
   const [submitError, setSubmitError] = React.useState<string | null>(null);
   const {
     formState: { errors, isSubmitting },
@@ -53,7 +60,7 @@ export function LoginForm({ signupSucceeded = false }: LoginFormProps) {
         return;
       }
 
-      router.replace("/dashboard");
+      router.replace(safeRedirectPath);
       router.refresh();
     } catch {
       setSubmitError(getLoginErrorMessage());
@@ -150,7 +157,7 @@ export function LoginForm({ signupSucceeded = false }: LoginFormProps) {
       <CardFooter className="justify-center border-t pt-6 text-sm text-muted-foreground">
         New to RepurposePro?{" "}
         <Link
-          href="/signup"
+          href={signupHref}
           className="ml-1 font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Create an account

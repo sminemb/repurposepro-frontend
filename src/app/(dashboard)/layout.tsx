@@ -1,10 +1,14 @@
 import { AppShell } from "@/components/layout/app-shell";
+import { ProtectedRoute } from "@/features/auth/components/protected-route";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // TODO: Add auth protection in Frontend Phase 9.
-  return <AppShell>{children}</AppShell>;
+  return (
+    <ProtectedRoute>
+      <AppShell>{children}</AppShell>
+    </ProtectedRoute>
+  );
 }
