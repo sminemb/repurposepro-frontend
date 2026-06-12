@@ -15,7 +15,7 @@ export default function Home() {
       <Card className="min-w-0 w-full max-w-xl">
         <CardHeader>
           <Badge variant="secondary" className="mb-3 w-fit">
-            Protected dashboard routes are ready.
+            Dashboard overview is ready.
           </Badge>
           <h1 className="text-3xl font-semibold tracking-tight">
             RepurposePro

@@ -1,6 +1,6 @@
 # RepurposePro Frontend
 
-RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 9 protected dashboard experience.
+RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 10 authenticated dashboard overview.
 
 ## Current Tech Stack
 
@@ -32,6 +32,8 @@ Phase 7 added the Better Auth React client, session hook, and sign-in, sign-up, 
 Phase 8 adds focused login and sign-up pages using React Hook Form, Zod validation, and the Better Auth client. Successful sign-in and session-creating sign-up redirect to the dashboard; sign-up falls back to the login page if no session is created. Email validation codes are not part of MVP signup unless explicitly added later.
 
 Phase 9 protects dashboard routes with the Better Auth client session. Unauthenticated users are redirected to login with safe internal destination handling, authenticated users see minimal account information, and the header includes logout UI. Backend authentication and authorization remain the security boundary for real data.
+
+Phase 10 adds the authenticated dashboard overview with workflow guidance, quick links to existing workspace sections, and an honest ready state. Project data fetching starts in Frontend Phase 11; no fake metrics, charts, or dashboard data are shown.
 
 ## Environment
 
