@@ -16,7 +16,7 @@ export default function Home() {
       <Card className="min-w-0 w-full max-w-xl">
         <CardHeader>
           <Badge variant="secondary" className="mb-3 w-fit">
-            Creator workspace
+            Auth pages are ready.
           </Badge>
           <h1 className="text-3xl font-semibold tracking-tight">
             RepurposePro
@@ -28,12 +28,18 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-5">
           <p className="text-sm leading-6 text-muted-foreground">
-            Open the creator workspace to manage your video repurposing
-            workflow.
+            Sign in or create an account to start your RepurposePro workflow.
+            Dashboard protection will be added in Frontend Phase 9.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Button asChild>
-              <Link href="/dashboard">Go to dashboard</Link>
+              <Link href="/login">Sign in</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/signup">Create account</Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link href="/dashboard">Open dashboard</Link>
             </Button>
             <ThemeToggle />
           </div>

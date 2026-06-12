@@ -1,6 +1,6 @@
 # RepurposePro Frontend
 
-RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 7 Better Auth client foundation.
+RepurposePro is a creator workspace for turning long-form videos into summaries and short reels. This repository currently contains the Phase 8 login and sign-up experience.
 
 ## Current Tech Stack
 
@@ -13,6 +13,8 @@ RepurposePro is a creator workspace for turning long-form videos into summaries 
 - next-themes
 - TanStack Query
 - Better Auth
+- React Hook Form
+- Zod
 - Vitest
 
 Phase 2 added dark-first semantic design tokens and the essential `Button`, `Card`, `Input`, `Label`, and `Badge` UI components.
@@ -25,7 +27,9 @@ Phase 5 adds the central typed API client, shared response contracts, and normal
 
 Phase 6 adds the shared TanStack Query client and wires `QueryClientProvider` through the app providers. Feature-specific queries will be added in later phases, with processing job polling planned for Frontend Phase 15.
 
-Phase 7 adds the Better Auth React client, session hook, and sign-in, sign-up, and sign-out helpers. Better Auth requests go through the Express API Gateway. Login and sign-up pages come in Frontend Phase 8, and dashboard route protection comes in Frontend Phase 9. Email validation codes are not part of the MVP unless explicitly added later.
+Phase 7 added the Better Auth React client, session hook, and sign-in, sign-up, and sign-out helpers. Better Auth requests go through the Express API Gateway.
+
+Phase 8 adds focused login and sign-up pages using React Hook Form, Zod validation, and the Better Auth client. Successful sign-in and session-creating sign-up redirect to the dashboard; sign-up falls back to the login page if no session is created. Dashboard route protection comes in Frontend Phase 9. Email validation codes are not part of MVP signup unless explicitly added later.
 
 ## Environment
 
